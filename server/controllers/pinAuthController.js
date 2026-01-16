@@ -123,7 +123,7 @@ exports.loginWithPin = async (req, res) => {
 
         // Generate token
         const token = jwt.sign(
-            { id: user.id, email: user.email },
+            { user: { id: user.id, email: user.email } },
             process.env.JWT_SECRET,
             { expiresIn: '7d' }
         );
@@ -214,7 +214,7 @@ exports.migrateToPin = async (req, res) => {
 
         // Generate token
         const token = jwt.sign(
-            { id: user.id, email: user.email },
+            { user: { id: user.id, email: user.email } },
             process.env.JWT_SECRET,
             { expiresIn: '7d' }
         );

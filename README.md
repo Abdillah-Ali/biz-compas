@@ -1,73 +1,89 @@
-# Welcome to your Lovable project
+# Atlas - Business Finance Manager
 
-## Project info
+Atlas is a comprehensive financial management platform designed for entrepreneurs to track multiple businesses, manage transactions, and analyze cash flow in real-time. It features a modern web dashboard and a secure mobile application.
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+![Atlas Dashboard](public/placeholder.svg)
 
-## How can I edit this code?
+## 🚀 Features
 
-There are several ways of editing your application.
+### Core Capabilities
+- **Multi-Business Support**: Manage finances for multiple distinct business portfolios.
+- **Transaction Tracking**: Easy income and expense recording with categorization.
+- **Real-Time Analytics**: Visual cash flow charts, income vs. expense breakdowns, and profit trends.
+- **Business Performance**: Individual performance cards for each business entity.
 
-**Use Lovable**
+### 📱 Mobile App Exclusive
+- **Secure PIN Authentication**: 
+  - 4-digit PIN for quick and secure access.
+  - Auto-lock session timeout (3 minutes of inactivity).
+  - Secure account locking after failed attempts.
+- **On-the-Go Management**: Add transactions instantly from your phone.
+- **Dashboard Overview**: View key metrics and recent history at a glance.
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+### 💻 Web Platform
+- **Comprehensive Dashboard**: Detailed charts and extensive data tables.
+- **Export Capabilities**: Generate reports and view deep insights.
+- **Business Management**: Create and configure new business portfolios.
 
-Changes made via Lovable will be committed automatically to this repo.
+## 🛠️ Tech Stack
 
-**Use your preferred IDE**
+**Frontend (Web)**
+- React (Vite)
+- TypeScript
+- Tailwind CSS
+- shadcn/ui
+- Recharts
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+**Mobile Application**
+- React Native (Expo)
+- TypeScript
+- React Navigation
+- 3-Factor Authentication Logic
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+**Backend**
+- Node.js & Express
+- PostgreSQL (Database)
+- JWT Authentication & Bcrypt Hashing
 
-Follow these steps:
+## 🏁 Getting Started
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+### Prerequisites
+- Node.js (v18+)
+- PostgreSQL
+- Expo Go app on your phone (for mobile testing)
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+### 1. Database Setup
+Create a PostgreSQL database and configure your `.env` file in the `server` directory.
+Run the migration scripts located in `server/migrations` to set up tables.
 
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+### 2. Backend Server
+```bash
+cd server
+npm install
 npm run dev
+# Server runs on http://localhost:5000
 ```
 
-**Edit a file directly in GitHub**
+### 3. Web Application
+```bash
+# Root directory
+npm install
+npm run dev
+# Web app runs on http://localhost:8080
+```
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+### 4. Mobile Application
+```bash
+cd mobile
+npm install
+npx expo start --tunnel
+# Scan the QR code with Expo Go
+```
 
-**Use GitHub Codespaces**
+## 🔐 Security Checks
+- **PIN System**: Implementation uses bcrypt for PIN hashing.
+- **Session**: 3-minute inactivity timer with React Native AppState monitoring.
+- **Network**: Configured for local development via IP/Tunneling.
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+## 📄 License
+Private - Abdillah Ali

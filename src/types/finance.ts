@@ -13,6 +13,8 @@ export interface Transaction {
   date: string;
   category: string;
   description?: string;
+  payment_method?: string;
+  account_id?: string;
 }
 
 export interface Account {

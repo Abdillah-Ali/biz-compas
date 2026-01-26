@@ -38,7 +38,7 @@ const Index = () => {
           </p>
         </div>
         <div className="flex items-center gap-3">
-          <QuickAddTransaction businesses={businesses} onAdd={addTransaction} />
+          <QuickAddTransaction businesses={businesses} accounts={accounts} onAdd={addTransaction} />
         </div>
       </div>
 

@@ -5,21 +5,23 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
-import { Business, Transaction } from '@/types/finance';
+import { Business, Transaction, Account } from '@/types/finance';
 import { categories, paymentMethods } from '@/lib/constants';
 import { Plus, ArrowUpRight, ArrowDownRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface QuickAddTransactionProps {
   businesses: Business[];
+  accounts: Account[];
   onAdd: (transaction: Omit<Transaction, 'id'>) => void;
 }
 
-export function QuickAddTransaction({ businesses, onAdd }: QuickAddTransactionProps) {
+export function QuickAddTransaction({ businesses, accounts, onAdd }: QuickAddTransactionProps) {
   const [open, setOpen] = useState(false);
   const [type, setType] = useState<'income' | 'expense'>('income');
   const [formData, setFormData] = useState({
     business_id: '',
+    account_id: '',
     amount: '',
     category: '',
     paymentMethod: '',
@@ -50,14 +52,17 @@ export function QuickAddTransaction({ businesses, onAdd }: QuickAddTransactionPr
     onAdd({
       type,
       business_id: formData.business_id,
+      account_id: formData.account_id || undefined,
       amount: parseFloat(formData.amount),
       category: formData.category,
+      payment_method: formData.paymentMethod || undefined,
       description: formData.description,
       date: formData.date,
     });
 
     setFormData({
       business_id: '',
+      account_id: '',
       amount: '',
       category: '',
       paymentMethod: '',
@@ -138,29 +143,49 @@ export function QuickAddTransaction({ businesses, onAdd }: QuickAddTransactionPr
             </div>
           </div>
 
-          <div className="space-y-2">
-            <Label>Business</Label>
-            <Select
-              value={formData.business_id}
-              onValueChange={(value) => setFormData({ ...formData, business_id: value })}
-            >
-              <SelectTrigger>
-                <SelectValue placeholder="Select business" />
-              </SelectTrigger>
-              <SelectContent>
-                {businesses.map((business) => (
-                  <SelectItem key={business.id} value={business.id}>
-                    <div className="flex items-center gap-2">
-                      <span
-                        className="h-2 w-2 rounded-full"
-                        style={{ backgroundColor: business.color }}
-                      />
-                      {business.name}
-                    </div>
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+          <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label>Business</Label>
+              <Select
+                value={formData.business_id}
+                onValueChange={(value) => setFormData({ ...formData, business_id: value })}
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder="Select business" />
+                </SelectTrigger>
+                <SelectContent>
+                  {businesses.map((business) => (
+                    <SelectItem key={business.id} value={business.id}>
+                      <div className="flex items-center gap-2">
+                        <span
+                          className="h-2 w-2 rounded-full"
+                          style={{ backgroundColor: business.color }}
+                        />
+                        {business.name}
+                      </div>
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="space-y-2">
+              <Label>Account</Label>
+              <Select
+                value={formData.account_id}
+                onValueChange={(value) => setFormData({ ...formData, account_id: value })}
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder="Select account" />
+                </SelectTrigger>
+                <SelectContent>
+                  {accounts.map((account) => (
+                    <SelectItem key={account.id} value={account.id}>
+                      {account.name} ({account.type})
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
           </div>
 
           <div className="grid grid-cols-2 gap-4">

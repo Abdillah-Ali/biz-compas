@@ -1,28 +1,32 @@
 import { useState, useMemo, useEffect } from 'react';
-import { Transaction, Business } from '@/types/finance';
+import { Transaction, Business, Account } from '@/types/finance';
 import { api } from '@/lib/api';
 
 export function useFinanceData() {
   const [selectedBusinessId, setSelectedBusinessId] = useState<string | 'all'>('all');
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [businesses, setBusinesses] = useState<Business[]>([]);
+  const [accounts, setAccounts] = useState<Account[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
+  const fetchData = async () => {
+    try {
+      const [businessesData, transactionsData, accountsData] = await Promise.all([
+        api.get('/finance/businesses'),
+        api.get('/finance/transactions'),
+        api.get('/finance/accounts'),
+      ]);
+      setBusinesses(businessesData.map((b: any) => ({ ...b, color: b.color || '#3b82f6' })));
+      setTransactions(transactionsData);
+      setAccounts(accountsData);
+    } catch (error) {
+      console.error('Error fetching finance data:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const [businessesData, transactionsData] = await Promise.all([
-          api.get('/finance/businesses'),
-          api.get('/finance/transactions'),
-        ]);
-        setBusinesses(businessesData.map((b: any) => ({ ...b, color: b.color || '#3b82f6' })));
-        setTransactions(transactionsData);
-      } catch (error) {
-        console.error('Error fetching finance data:', error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
     fetchData();
   }, []);
 
@@ -97,6 +101,9 @@ export function useFinanceData() {
     try {
       const newTransaction = await api.post('/finance/transactions', transaction);
       setTransactions(prev => [newTransaction, ...prev]);
+      // Refetch accounts to update balances
+      const updatedAccounts = await api.get('/finance/accounts');
+      setAccounts(updatedAccounts);
     } catch (error) {
       console.error('Error adding transaction:', error);
     }
@@ -111,9 +118,18 @@ export function useFinanceData() {
     }
   };
 
+  const addAccount = async (account: Omit<Account, 'id'>) => {
+    try {
+      const newAccount = await api.post('/finance/accounts', account);
+      setAccounts(prev => [...prev, newAccount]);
+    } catch (error) {
+      console.error('Error adding account:', error);
+    }
+  };
+
   return {
     businesses,
-    accounts: [],
+    accounts,
     transactions: filteredTransactions,
     metrics,
     businessMetrics,
@@ -123,6 +139,8 @@ export function useFinanceData() {
     setSelectedBusinessId,
     addTransaction,
     addBusiness,
+    addAccount,
     isLoading,
+    refresh: fetchData,
   };
 }

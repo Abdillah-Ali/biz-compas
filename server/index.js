@@ -16,7 +16,7 @@ app.use('/api/finance', require('./routes/finance'));
 
 // Root route
 app.get('/', (req, res) => {
-    res.send('Biz Compass API is running...');
+    res.send('Altas API is running...');
 });
 
 const PORT = process.env.PORT || 5000;

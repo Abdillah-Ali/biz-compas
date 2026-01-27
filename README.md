@@ -1,8 +1,8 @@
-# Atlas - Business Finance Manager
+# Altas - Business Finance Manager
 
-Atlas is a comprehensive financial management platform designed for entrepreneurs to track multiple businesses, manage transactions, and analyze cash flow in real-time. It features a modern web dashboard and a secure mobile application.
+Altas is a comprehensive financial management platform designed for entrepreneurs to track multiple businesses, manage transactions, and analyze cash flow in real-time. It features a modern web dashboard and a secure mobile application.
 
-![Atlas Dashboard](public/placeholder.svg)
+![Altas Dashboard](public/placeholder.svg)
 
 ## 🚀 Features
 
